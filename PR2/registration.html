@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Registration</h2>
+
+        <form id="registerForm">
+            <label>Full Name</label>
+            <input type="text" id="name"
+                   placeholder="Enter your name" required>
+
+            <label>Email</label>
+            <input type="email" id="email"
+                   placeholder="Enter your email" required>
+
+            <label>Password</label>
+            <input type="password" id="password"
+                   placeholder="Create a password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p id="message"></p>
+
+        <p>Already registered?
+            <a href="login.html">Login here</a>
+        </p>
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim().toLowerCase();
+            const password = document.getElementById("password").value;
+
+            const existingUser = JSON.parse(localStorage.getItem("user"));
+
+            if (existingUser && existingUser.email === email) {
+                document.getElementById("message").textContent =
+                    "You are already registered. Please login!";
+                return;
+            }
+
+            const user = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            localStorage.setItem("user", JSON.stringify(user));
+            sessionStorage.setItem("loggedIn", "true");
+
+            window.location.href = "home.html";
+        });
+    </script>
+</body>
+</html>

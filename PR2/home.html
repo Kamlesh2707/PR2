@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Screen</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Home Screen</h2>
+
+        <h3 id="welcome"></h3>
+        <p>You have logged in successfully!</p>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        if (sessionStorage.getItem("loggedIn") !== "true") {
+            window.location.replace("login.html");
+        } else {
+            const user = JSON.parse(localStorage.getItem("user"));
+
+            if (!user) {
+                sessionStorage.removeItem("loggedIn");
+                window.location.replace("login.html");
+            } else {
+                document.getElementById("welcome").textContent =
+                    "Welcome, " + user.name + "!";
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
